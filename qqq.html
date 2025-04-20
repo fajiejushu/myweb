@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>樱花之恋 ❤ 专属告白</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(to bottom right, #ffb3c6, #ff758f);
+            min-height: 100vh;
+            overflow: hidden;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .sakura {
+            position: fixed;
+            background: #fff;
+            border-radius: 50% 50% 0 50%;
+            transform: rotate(-45deg);
+            pointer-events: none;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10vh) rotate(-45deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110vh) rotate(0deg);
+                opacity: 0;
+            }
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 3.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            margin-bottom: 1.5rem;
+            animation: fadeIn 2s ease-in;
+        }
+
+        .love-letter {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+            line-height: 1.6;
+            color: #ff758f;
+            font-size: 1.2rem;
+        }
+
+        .heart-btn {
+            background: #ff758f;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .heart-btn:hover {
+            transform: scale(1.1);
+            background: #ff6380;
+            box-shadow: 0 4px 15px rgba(255, 117, 143, 0.4);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #confetti {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .photo-frame {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 5px solid white;
+            margin: 1rem auto;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            background: url('your-photo-url.jpg') center/cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="photo-frame"></div>
+        <h1>❤ 给最特别的你 ❤</h1>
+        
+        <div class="love-letter">
+            <p>亲爱的<span id="name">XXX</span>：</p>
+            <p>在樱花飘落的季节里，我想对你说...</p>
+            <p>你是我生命中最美的邂逅，</p>
+            <p>就像这樱花般温柔了整个世界。</p>
+            <p>愿与你共度每个春夏秋冬，</p>
+            <p>你愿意成为我的唯一吗？</p>
+        </div>
+
+        <button class="heart-btn" onclick="showResponse()">❤ 点击查看我的心意 ❤</button>
+
+        <div id="response" class="hidden">
+            <h2>请做我的女朋友好吗？</h2>
+            <div>
+                <button class="heart-btn" onclick="respond(true)">❤ 我愿意！</button>
+                <button class="heart-btn" onclick="respond(false)" style="margin-left: 1rem;">😢 再考虑一下</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 创建樱花飘落效果
+        function createSakura() {
+            const sakura = document.createElement('div');
+            sakura.classList.add('sakura');
+            sakura.style.left = Math.random() * 100 + 'vw';
+            sakura.style.width = Math.random() * 10 + 5 + 'px';
+            sakura.style.height = sakura.style.width;
+            sakura.style.animationDuration = Math.random() * 3 + 5 + 's';
+            document.body.appendChild(sakura);
+
+            setTimeout(() => {
+                sakura.remove();
+            }, 8000);
+        }
+
+        // 每隔一段时间创建樱花
+        setInterval(createSakura, 300);
+
+        // 交互功能
+        function showResponse() {
+            const name = prompt("请输入你的名字：");
+            if (name) {
+                document.getElementById('name').textContent = name;
+                document.getElementById('response').classList.remove('hidden');
+            }
+        }
+
+        function respond(answer) {
+            if (answer) {
+                alert("🎉 太棒了！你让我的世界瞬间绽放！");
+                createConfetti();
+            } else {
+                alert("💔 我会一直等待，直到你愿意...");
+            }
+        }
+
+        // 创建庆祝效果
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+           confetti.style.cssText = `
+                    position: fixed;
+                    width: 10px;
+                    height: 10px;
+                    background: hsl(${Math.random() * 360}, 100%, 50%);
+                    border-radius: 50%;
+                    left: ${Math.random() * 100}%;
+                    animation: confettiFall ${Math.random() * 3 + 2}s ease-out;
+                `;
+                document.body.appendChild(confetti);
+
+                setTimeout(() => confetti.remove(), 5000);
+            }
+        }
+    </script>
+</body>
+</html>
